@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#06377b</color>
+    <color name="colorPrimaryDark">#829bbd</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#e7e7f9</color>
+    <color name="colorGreen">#549788</color>
+    <color name="colorGrey">#eeeeee</color>
+    <color name="colorRed">#B51E2A</color>
+    <color name="colorMandatory">#B51E2A</color>
+    <color name="colorRecommended">#EEA236</color>
+    <color name="colorAdvisory">#5CB85C</color>
+    <color name="colorFCI_2">#B51E2A</color>
+    <color name="colorFCI_4">#E9724C</color>
+    <color name="colorFCI_6">#EEA236</color>
+    <color name="colorFCI_8">#FFC857</color>
+    <color name="colorFCI_10">#5CB85C</color>
+</resources>
+

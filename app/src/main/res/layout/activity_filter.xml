@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto" android:id="@+id/location_card_view" android:padding="20dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" card_view:cardCornerRadius="8dp" >
+            <RelativeLayout android:padding="20dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout1"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelStatus"
+                        android:text="Status:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical" />
+
+                    <Spinner
+                        android:id="@+id/status"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout2"
+                    android:layout_below="@id/layout1"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelPriority"
+                        android:text="Priority:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"/>
+
+                    <Spinner
+                        android:id="@+id/priority"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout3"
+                    android:layout_below="@id/layout2"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelTrade"
+                        android:text="Trade:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"/>
+
+                    <Spinner
+                        android:id="@+id/trade"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto" android:id="@+id/details_card_view" android:padding="20dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:layout_below="@id/location_card_view" card_view:cardCornerRadius="8dp">
+            <RelativeLayout android:padding="20dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout4"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelClient"
+                        android:text="Client:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"/>
+                    <Spinner
+                        android:id="@+id/client"
+                        android:text="Client Copy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout5"
+                    android:layout_below="@id/layout4"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelEstate"
+                        android:text="Estate:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"/>
+                    <Spinner
+                        android:id="@+id/estate"
+                        android:text="Estate Copy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout6"
+                    android:layout_below="@id/layout5"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelBuilding"
+                        android:text="Building:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"/>
+                    <Spinner
+                        android:id="@+id/building"
+                        android:text="Building Copy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout7"
+                    android:layout_below="@id/layout6"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelFloor"
+                        android:text="Floor:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"/>
+                    <Spinner
+                        android:id="@+id/floor"
+                        android:text="Floor Copy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout8"
+                    android:layout_below="@id/layout7"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelProfile"
+                        android:text="Profile:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"/>
+                    <Spinner
+                        android:id="@+id/profile"
+                        android:text="Profile Copy"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:padding="20dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:layout_below="@id/details_card_view" card_view:cardCornerRadius="8dp" >
+            <RelativeLayout android:padding="20dp" android:layout_width="match_parent" android:layout_height="wrap_content" >
+                <TextView android:textStyle="bold" android:id="@+id/labelCompleted" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:layout_marginTop="40dp" android:layout_marginBottom="40dp" android:text="Show Completed:"  />
+                <ToggleButton
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:textOn="Yes" android:textOff="No" android:layout_toRightOf="@id/labelCompleted" android:layout_alignBottom="@id/labelCompleted" android:onClick="onToggleClickedCompleted" />
+                <Button android:id="@+id/button_filter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Filter" android:drawableLeft="@mipmap/ic_action_filter" android:layout_below="@id/labelCompleted" android:onClick="doFilter" />
+                <Button
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Reset" android:drawableLeft="@mipmap/ic_action_reload" android:layout_toRightOf="@id/button_filter" android:layout_alignBottom="@id/button_filter" android:onClick="doReset" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</LinearLayout>

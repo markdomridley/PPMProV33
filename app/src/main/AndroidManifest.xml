@@ -1,0 +1,53 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="uk.co.blubrickstudios.ppmprov2">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <application android:theme="@style/MyMaterialTheme" android:label="@string/app_name" android:icon="@mipmap/ic_app_launcher" android:name="uk.co.bluebrickstudios.ppmprov2.PPMProApp" android:allowBackup="true">
+        <activity android:theme="@android:style/Theme.Black.NoTitleBar" android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.SplashScreen" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.MainActivity" android:screenOrientation="portrait" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.LoginActivity" android:screenOrientation="portrait" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.ItemDetail" android:screenOrientation="portrait" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.ItemEdit" android:screenOrientation="portrait" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.ItemAdd" android:screenOrientation="portrait" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.ItemAddByProfile" android:screenOrientation="portrait" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.ImageDetail" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.FilterActivity" android:screenOrientation="portrait" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.AboutActivity" android:screenOrientation="portrait" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.ViewMap" />
+        <activity android:label="@string/app_name" android:name="uk.co.bluebrickstudios.ppmprov2.ViewMapAdvanced" />
+        <activity android:label="PPMProV2" android:name="uk.co.bluebrickstudios.ppmprov2.InspectionCalendarEvent" />
+        <activity android:label="PPMProV2" android:name="uk.co.bluebrickstudios.ppmprov2.InspectionCalendarView" />
+        <service android:name="uk.co.bluebrickstudios.ppmprov2.ItemService" android:enabled="true" />
+        <receiver android:name="uk.co.bluebrickstudios.ppmprov2.ItemBC" android:process=":remote">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="uk.co.bluebrickstudios.ppmprov2.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+    </application>
+</manifest>

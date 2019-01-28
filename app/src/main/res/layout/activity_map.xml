@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
+    <uk.co.bluebrickstudios.ppmprov2.helper.TouchImageView android:id="@+id/img" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/floorplan2" />
+    <LinearLayout android:id="@+id/top_text_line" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+        <TextView android:paddingRight="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/get_scroll_position" />
+        <TextView android:id="@+id/scroll_position" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/top_text_line" android:layout_centerHorizontal="true">
+        <TextView android:paddingRight="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/get_zoomed_rect" />
+        <TextView android:id="@+id/zoomed_rect" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView android:id="@+id/current_zoom" android:padding="5dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:text="@string/get_current_zoom" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+</RelativeLayout>

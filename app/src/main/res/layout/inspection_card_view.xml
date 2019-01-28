@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" card_view:cardCornerRadius="0dp">
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <TextView android:id="@+id/inspectionId" android:visibility="invisible" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView android:textStyle="bold" android:textAppearance="?android:attr/textAppearanceLarge" android:textColor="@color/colorPrimary" android:id="@+id/inspection_breadcrumb" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:layout_marginTop="10dp" android:layout_marginBottom="5dp" android:text="Client Path" android:layout_alignParentLeft="true" android:layout_alignParentTop="true"  />
+        <TextView android:textStyle="bold" android:id="@+id/name_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="Location" android:layout_below="@id/inspection_breadcrumb" />
+        <TextView android:textStyle="bold" android:id="@+id/profile_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Profile" android:layout_below="@id/name_label" android:layout_alignLeft="@id/name_label" />
+        <TextView android:textStyle="bold" android:id="@+id/dates_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Date" android:layout_below="@id/profile_label" android:layout_alignLeft="@id/profile_label" />
+        <TextView android:textStyle="bold" android:id="@+id/completed_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Completed" android:layout_below="@id/dates_label" android:layout_alignLeft="@id/dates_label" />
+
+        <TextView android:id="@+id/name_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/completed_label" android:layout_alignTop="@id/name_label" />
+        <TextView android:id="@+id/profile_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/completed_label" android:layout_alignTop="@id/profile_label" />
+        <TextView android:id="@+id/dates_value" android:textStyle="bold" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/completed_label" android:layout_alignTop="@id/dates_label" />
+        <TextView android:id="@+id/completed_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/completed_label" android:layout_alignTop="@id/completed_label" />
+
+        <TextView
+            android:text="Mandatory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/insp_prioritybutton"
+            android:layout_marginEnd="18dp"
+            android:padding="10dp"
+            android:layout_marginBottom="18dp"
+            android:textStyle="bold"
+            android:layout_alignBaseline="@+id/completed_label"
+            android:layout_alignBottom="@+id/completed_label"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:text="Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/insp_statusbutton"
+            android:padding="10dp"
+            android:layout_alignBaseline="@+id/inspection_breadcrumb"
+            android:layout_alignBottom="@+id/inspection_breadcrumb"
+            android:layout_alignEnd="@+id/insp_prioritybutton" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

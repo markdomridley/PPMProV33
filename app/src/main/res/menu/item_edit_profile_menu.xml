@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:icon="@mipmap/ic_action_arrow_left" android:id="@+id/close" android:title="Close" />
+    <item android:icon="@mipmap/ic_action_tick" android:id="@+id/save" android:title="Save Items" />
+    <item android:icon="@mipmap/ic_action_camera" android:id="@+id/addphoto" android:title="Add Photo and Save" />
+    <item android:icon="@mipmap/ic_action_trash" android:id="@+id/delete" android:title="Delete Item" />
+</menu>

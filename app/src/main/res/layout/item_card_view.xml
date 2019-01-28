@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" card_view:cardCornerRadius="8dp">
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <TextView android:id="@+id/itemId" android:visibility="invisible" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView android:textStyle="bold" android:textAppearance="?android:attr/textAppearanceLarge" android:textColor="@color/colorPrimary" android:id="@+id/item_breadcrumb" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:layout_marginTop="10dp" android:layout_marginBottom="5dp" android:text="DEBUG" android:layout_alignParentLeft="true" android:layout_alignParentTop="true"  />
+        <TextView android:textStyle="bold" android:id="@+id/status_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="Status" android:layout_below="@id/item_breadcrumb" />
+        <TextView android:textStyle="bold" android:id="@+id/trade_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Profile" android:layout_below="@id/status_label" android:layout_alignLeft="@id/status_label" />
+        <TextView android:textStyle="bold" android:id="@+id/itemtype_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Item Type" android:layout_below="@id/trade_label" android:layout_alignLeft="@id/trade_label" />
+        <TextView android:textStyle="bold" android:id="@+id/defect_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Defect" android:layout_below="@id/itemtype_label" android:layout_alignLeft="@id/itemtype_label" />
+        <TextView android:textStyle="bold" android:id="@+id/action_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Action" android:layout_below="@id/defect_label" android:layout_alignLeft="@id/defect_label" />
+        <TextView android:textStyle="bold" android:id="@+id/guid_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GUID" android:layout_below="@id/action_label" android:layout_alignLeft="@id/action_label" />
+        <TextView android:textStyle="bold" android:id="@+id/notes_label" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Notes" android:layout_below="@id/guid_label" android:layout_alignLeft="@id/guid_label" />
+
+        <TextView android:id="@+id/status_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/itemtype_label" android:layout_alignTop="@id/status_label" />
+        <TextView android:id="@+id/trade_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/itemtype_label" android:layout_alignTop="@id/trade_label" />
+        <TextView android:id="@+id/itemtype_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/itemtype_label" android:layout_alignTop="@id/itemtype_label" />
+        <TextView android:id="@+id/defect_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/itemtype_label" android:layout_alignTop="@id/defect_label" />
+        <TextView android:id="@+id/action_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/itemtype_label" android:layout_alignTop="@id/action_label" />
+        <TextView android:id="@+id/guid_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/itemtype_label" android:layout_alignTop="@id/guid_label" />
+        <TextView android:id="@+id/notes_value" android:padding="2dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:text="TextView" android:layout_toRightOf="@id/itemtype_label" android:layout_alignTop="@id/notes_label" />
+
+        <TextView android:textStyle="bold" android:textColor="@color/colorPrimaryDark" android:id="@+id/date_label" android:padding="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:text="Date Added:" android:layout_below="@id/notes_value" />
+        <TextView android:textStyle="italic" android:textColor="@color/colorPrimaryDark" android:id="@+id/date_value" android:padding="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="40dp" android:layout_marginBottom="10dp" android:text="TextView" android:layout_toRightOf="@id/date_label" android:layout_below="@id/notes_value" />
+        <TextView android:textStyle="bold" android:textColor="@color/colorPrimaryDark" android:id="@+id/modified_label" android:padding="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:text="Date Modified" android:layout_toRightOf="@id/date_value" android:layout_below="@id/notes_value" />
+        <TextView android:textStyle="italic" android:textColor="@color/colorPrimaryDark" android:id="@+id/modified_value" android:padding="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:text="TextView" android:layout_toRightOf="@id/modified_label" android:layout_below="@id/notes_value" />
+        <TextView android:textStyle="bold" android:textColor="@color/colorPrimaryDark" android:id="@+id/uploaded_label" android:padding="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:text="" android:layout_toRightOf="@id/modified_value" android:layout_below="@id/notes_value" />
+
+        <TextView
+            android:text="Mandatory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prioritybutton"
+            android:layout_marginEnd="18dp"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:layout_alignBaseline="@+id/modified_label"
+            android:layout_alignBottom="@+id/modified_label"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:text="Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/statusbutton"
+            android:layout_alignBaseline="@+id/item_breadcrumb"
+            android:layout_alignBottom="@+id/item_breadcrumb"
+            android:layout_alignEnd="@+id/prioritybutton" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
