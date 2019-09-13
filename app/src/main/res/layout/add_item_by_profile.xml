@@ -174,7 +174,7 @@
                             android:layout_marginLeft="10dp"
                             android:textSize="18sp"
                             android:gravity="center_vertical"/>
-                        <EditText
+                        <AutoCompleteTextView
                             android:id="@+id/detailPodnumber"
                             android:text=""
                             android:layout_width="fill_parent"
@@ -188,12 +188,29 @@
                             android:text="Location:"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
-
                             android:layout_marginLeft="10dp"
                             android:textSize="18sp"
                             android:gravity="center_vertical"/>
                         <EditText
                             android:id="@+id/location"
+                            android:text=""
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="25"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:gravity="center_vertical"/>
+
+                        <TextView
+                            android:id="@+id/labelJob"
+                            android:text="Job No.:"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="18sp"
+                            android:gravity="center_vertical"/>
+                        <AutoCompleteTextView
+                            android:id="@+id/job_number"
                             android:text=""
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
@@ -210,6 +227,19 @@
                         android:orientation="horizontal"
                         android:layout_marginBottom="10dp"
                         >
+
+                        <Switch
+                            android:id="@+id/inspection_type"
+                            android:text="Overall FCI?: "
+                            android:checked="false"
+                            android:textOff="NO"
+                            android:textOn="YES"
+                            android:switchMinWidth="50dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="30dp"
+                            android:gravity="center_vertical"/>
 
                         <Button
                             android:text="2. Imd. Act. Req."

@@ -9,6 +9,7 @@ import java.util.List;
 import uk.co.bluebrickstudios.ppmprov2.model.Floor;
 
 public class FloorSpinnerAdapter extends ArrayAdapter<Floor> {
+
     private Context mContext;
     private List<Floor> mValues;
 

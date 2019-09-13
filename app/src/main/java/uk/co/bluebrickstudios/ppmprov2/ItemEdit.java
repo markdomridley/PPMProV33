@@ -105,6 +105,7 @@ public class ItemEdit extends AppCompatActivity implements OnClickListener, OnIt
     ItemTypeSpinnerAdapter itemTypeAdapter;
     private Spinner itemtype;
     private EditText location;
+    private EditText job_number;
     String mCurrentPhotoFilename;
     String mCurrentPhotoPath;
     File photoFile;
@@ -197,6 +198,7 @@ public class ItemEdit extends AppCompatActivity implements OnClickListener, OnIt
         this.trade = (Spinner) findViewById(R.id.trade);
         this.action = (Spinner) findViewById(R.id.action);
         this.location = (EditText) findViewById(R.id.location);
+        this.job_number = (EditText) findViewById(R.id.job_number);
         this.podnumber = (EditText) findViewById(R.id.podnumber);
         this.added = (TextView) findViewById(R.id.itemAdded);
         this.edited = (TextView) findViewById(R.id.itemEdited);
@@ -225,6 +227,7 @@ public class ItemEdit extends AppCompatActivity implements OnClickListener, OnIt
         this.item = this.controller.getItem((long) this._Item_Id);
         this.description.setText(this.item.getDescription());
         this.location.setText(this.item.getLocation());
+        this.job_number.setText(this.item.getJob_number());
         this.podnumber.setText(this.item.getPodnumber());
         this.added.setText(this.item.getCreated_at());
         this.edited.setText(this.item.getUpdated_at());
@@ -504,6 +507,7 @@ public class ItemEdit extends AppCompatActivity implements OnClickListener, OnIt
             saveItem.setId(this._Item_Id);
             saveItem.setDescription(this.description.getText().toString());
             saveItem.setLocation(this.location.getText().toString());
+            saveItem.setJob_number(this.job_number.getText().toString());
             saveItem.setPodnumber(this.podnumber.getText().toString());
             saveItem.setFloor_id(((Floor) this.floor.getItemAtPosition(this.floor.getSelectedItemPosition())).getId());
             saveItem.setBuilding_id(((Building) this.building.getItemAtPosition(this.building.getSelectedItemPosition())).getId());

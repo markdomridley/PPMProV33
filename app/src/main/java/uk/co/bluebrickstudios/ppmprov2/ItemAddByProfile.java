@@ -17,14 +17,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
+import android.widget.Switch;
+import android.widget.ToggleButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
@@ -64,14 +69,16 @@ import uk.co.bluebrickstudios.ppmprov2.model.Image;
 import uk.co.bluebrickstudios.ppmprov2.model.Inspection;
 import uk.co.bluebrickstudios.ppmprov2.model.Item;
 import uk.co.bluebrickstudios.ppmprov2.model.ItemType;
+import uk.co.bluebrickstudios.ppmprov2.model.Job;
 import uk.co.bluebrickstudios.ppmprov2.model.Priority;
 import uk.co.bluebrickstudios.ppmprov2.model.Profile;
 import uk.co.bluebrickstudios.ppmprov2.model.Status;
 import uk.co.bluebrickstudios.ppmprov2.model.Trade;
+import uk.co.bluebrickstudios.ppmprov2.model.Location;
 import uk.co.bluebrickstudios.ppmprov2.pherialize.MixedArray;
 import uk.co.bluebrickstudios.ppmprov2.pherialize.Pherialize;
 
-public class ItemAddByProfile extends AppCompatActivity implements OnClickListener, OnItemSelectedListener {
+public class ItemAddByProfile extends AppCompatActivity implements OnClickListener, OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
     private static final String LOG;
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_SET_LOCATION = 2;
@@ -110,7 +117,13 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
     private GridView gridView;
     private int itemTypeNumber;
     private Button[] itemtypeButtons;
-    private EditText podnumber;
+
+    //private EditText podnumber;
+
+    private AutoCompleteTextView podnumber;
+    private AutoCompleteTextView job_number;
+    private Switch inspection_switch;
+
     ProgressDialog prgDialogImage;
     ProgressDialog prgDialogNew;
 
@@ -130,6 +143,7 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
     //private FCIScore selectedFCIScore;
     private EditText description;
     private EditText location;
+
     String mCurrentPhotoFilename;
     String mCurrentPhotoPath;
     File photoFile;
@@ -370,7 +384,16 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
         //this.fciScore = (Spinner) findViewById(R.id.fciScore);
         this.description = (EditText) findViewById(R.id.detailDescription);
         this.location = (EditText) findViewById(R.id.location);
-        this.podnumber = (EditText) findViewById(R.id.detailPodnumber);
+        //this.job_number = (EditText) findViewById(R.id.job_number);
+
+        this.inspection_switch = (Switch)findViewById(R.id.inspection_type);
+
+        this.inspection_switch.setOnCheckedChangeListener(this);
+
+        //this.podnumber = (EditText) findViewById(R.id.detailPodnumber);
+
+
+
         this.building.setOnItemSelectedListener(this);
 
         //this.client.setOnItemSelectedListener(this);
@@ -385,9 +408,23 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
         //this.priority = (Spinner) findViewById(R.id.priority);
         //this.priority.setOnItemSelectedListener(this);
 
+        ArrayAdapter<String> loc_adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, controller.getAllLocations());
+        this.podnumber = (AutoCompleteTextView) findViewById(R.id.detailPodnumber);
+        podnumber.setThreshold(1);
+        podnumber.setAdapter(loc_adapter);
+
+        ArrayAdapter<String> job_adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, controller.getAllJobs());
+        this.job_number = (AutoCompleteTextView) findViewById(R.id.job_number);
+        job_number.setThreshold(1);
+        job_number.setAdapter(job_adapter);
+
+
+
         this._Item_Id = 0;
         this._Item_Id = getIntent().getIntExtra("item_Id", 0);
         this.item = new Item();
+
+
 
         PPMProApp app = (PPMProApp) getApplication();
 
@@ -686,14 +723,16 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
         try{
             //if (this.podnumber.getText().toString().length() > 0) {
                 if (this.selectedItemtype.length() > 0) {
-                    if (this.selectedDefect.length() > 0) {
-                        if (this.selectedAction.length() > 0) {
+                    if (inspection_switch.isChecked() || this.selectedDefect.length() > 0) {
+                        if (inspection_switch.isChecked() || this.selectedAction.length() > 0) {
 
                             Item saveItem = new Item();
                             saveItem.setId(this._Item_Id);
                             saveItem.setDescription(this.description.getText().toString());
                             saveItem.setLocation(this.location.getText().toString());
+                            saveItem.setJob_number(this.job_number.getText().toString());
                             saveItem.setPodnumber(this.podnumber.getText().toString());
+
                             /*
                             saveItem.setFloor_id(((Floor) this.floor.getItemAtPosition(this.floor.getSelectedItemPosition())).getId());
                             saveItem.setBuilding_id(((Building) this.building.getItemAtPosition(this.building.getSelectedItemPosition())).getId());
@@ -704,6 +743,35 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
                             saveItem.setFloor_id(saveFloor.getId());
                             Building saveBuilding = (Building) this.building.getItemAtPosition(this.building.getSelectedItemPosition());
                             saveItem.setBuilding_id(saveBuilding.getId());
+
+                            /* save new location if it does not exist */
+                            if(!controller.getLocation(saveBuilding.getId(), this.podnumber.getText().toString())){
+                                Location new_location = new Location();
+                                new_location.setBuilding_id(saveBuilding.getId());
+                                new_location.setName(this.podnumber.getText().toString());
+                                new_location.setId(0);
+                                controller.createLocation(new_location);
+                                //ArrayAdapter<String> loc_adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, saveBuilding.getId());
+                                //podnumber.setAdapter(loc_adapter);
+                            }
+
+                            /* save new job if it does not exist */
+                            if(!controller.getJob(saveBuilding.getId(), this.podnumber.getText().toString())){
+                                Job new_job = new Job();
+                                new_job.setBuilding_id(saveBuilding.getId());
+                                new_job.setName(this.job_number.getText().toString());
+                                new_job.setId(0);
+                                controller.createJob(new_job);
+                                //ArrayAdapter<String> loc_adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, saveBuilding.getId());
+                                //podnumber.setAdapter(loc_adapter);
+                            }
+
+                            if(this.inspection_switch.isChecked()){
+                                saveItem.setInspection_type("Overall FCI");
+                            }
+                            else{
+                                saveItem.setInspection_type("Specific Defect");
+                            }
 
                             saveItem.setEstate_id(this.estate_id);
                             saveItem.setClient_id(this.client_id);
@@ -720,10 +788,19 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
 
                             saveItem.setItemtype_id(this.controller.getItemType(this.selectedItemtype).getId());
                             Log.d(LOG, "Itemtype ID = " + saveItem.getItemtype_id());
-                            saveItem.setDefect_id(this.controller.getDefect(this.selectedDefect).getId());
-                            saveItem.setAction_id(this.controller.getAction(this.selectedAction).getId());
-                            //saveItem.setTrade_id(37);
-                            saveItem.setTrade_id(this.controller.getTrade(this.selectedTrade).getId());
+
+                            if(inspection_switch.isChecked()){
+                                saveItem.setDefect_id(54);
+                                saveItem.setAction_id(44);
+                                saveItem.setTrade_id(40);
+                            }
+                            else{
+                                saveItem.setDefect_id(this.controller.getDefect(this.selectedDefect).getId());
+                                saveItem.setAction_id(this.controller.getAction(this.selectedAction).getId());
+                                saveItem.setTrade_id(this.controller.getTrade(this.selectedTrade).getId());
+                            }
+
+
                             saveItem.setStatus_id(1);
                             saveItem.setUploaded(REQUEST_SET_LOCATION);
 
@@ -763,13 +840,43 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
                             resetButtons();
                             return;
                         }
+                        else{
+                            if(inspection_switch.isChecked()){
+                                Toast.makeText(this, "Please ensure you add a POD number and Item Type", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(this, "Please ensure you add a POD number and select Item Type, Defect and Action", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                    else{
+                        if(inspection_switch.isChecked()){
+                            Toast.makeText(this, "Please ensure you add a POD number and Item Type", Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(this, "Please ensure you add a POD number and select Item Type, Defect and Action", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                else{
+                    if(inspection_switch.isChecked()){
+                        Toast.makeText(this, "Please ensure you add a POD number and Item Type", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(this, "Please ensure you add a POD number and select Item Type, Defect and Action", Toast.LENGTH_LONG).show();
                     }
                 }
             //}
         }
         catch(Exception e){
             e.printStackTrace();
-            Toast.makeText(this, "Please ensure you add a POD number and select Item Type, Defect and Action", Toast.LENGTH_SHORT).show();
+            if(inspection_switch.isChecked()){
+                Toast.makeText(this, "Please ensure you add a POD number and Item Type", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(this, "Please ensure you add a POD number and select Item Type, Defect and Action", Toast.LENGTH_LONG).show();
+            }
+
 
         }
 
@@ -856,6 +963,8 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
         params.put("guid", item.getGuid());
         params.put("lastaction", item.getLastaction());
         params.put("location", item.getLocation());
+        params.put("inspection_type", item.getInspection_type());
+        params.put("job_number", item.getJob_number());
         params.put("user_id", ((PPMProApp) getApplication()).getUserId());
         params.put("status_id", Integer.toString(item.getStatus_id()));
         params.put("priority_id", Integer.toString(item.getPriority_id()));
@@ -1318,8 +1427,14 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
 
         }
 
+    }
 
-
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            this.item.setInspection_type("Overall FCI");
+        } else {
+            this.item.setInspection_type("Specific Defect");
+        }
     }
 
     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -1340,6 +1455,9 @@ public class ItemAddByProfile extends AppCompatActivity implements OnClickListen
             populateFloorSpinner(0);
         } else if (parentView == findViewById(R.id.building)) {
             populateFloorSpinner(((Building) parentView.getItemAtPosition(position)).getId());
+            //ArrayAdapter<String> loc_adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, ((Building) parentView.getItemAtPosition(position)).getId());
+            //podnumber.setAdapter(loc_adapter);
+
         } else if (parentView == findViewById(R.id.inspection)) {
             populateProfileSpinner(app.getClient_id(), app.getEstate_id());
             populateBuildingSpinner(app.getEstate_id());

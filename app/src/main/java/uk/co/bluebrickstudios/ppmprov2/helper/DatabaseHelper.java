@@ -23,11 +23,13 @@ import uk.co.bluebrickstudios.ppmprov2.model.Image;
 import uk.co.bluebrickstudios.ppmprov2.model.Inspection;
 import uk.co.bluebrickstudios.ppmprov2.model.Item;
 import uk.co.bluebrickstudios.ppmprov2.model.ItemType;
+import uk.co.bluebrickstudios.ppmprov2.model.Job;
 import uk.co.bluebrickstudios.ppmprov2.model.Priority;
 import uk.co.bluebrickstudios.ppmprov2.model.Profile;
 import uk.co.bluebrickstudios.ppmprov2.model.Status;
 import uk.co.bluebrickstudios.ppmprov2.model.Trade;
 import uk.co.bluebrickstudios.ppmprov2.model.User;
+import uk.co.bluebrickstudios.ppmprov2.model.Location;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_ACTION = "CREATE TABLE actions(id INTEGER PRIMARY KEY,name TEXT,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
@@ -38,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_ESTATE = "CREATE TABLE estates(id INTEGER PRIMARY KEY,name TEXT,client_id INTEGER,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
     private static final String CREATE_TABLE_FLOOR = "CREATE TABLE floors(id INTEGER PRIMARY KEY,name TEXT,building_id INTEGER,xlower TEXT,xupper TEXT,ylower TEXT,yupper TEXT,floorplan TEXT,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
     private static final String CREATE_TABLE_IMAGE = "CREATE TABLE images(id INTEGER PRIMARY KEY,name TEXT,filename TEXT,thumbnail TEXT,featured INTEGER,item_id INTEGER,uploaded INTEGER, local_image_ref TEXT, created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
-    private static final String CREATE_TABLE_ITEM = "CREATE TABLE items(id INTEGER PRIMARY KEY,name TEXT, description TEXT, notes TEXT, lastaction TEXT, location TEXT, user_id INTEGER, status_id INTEGER, defect_id INTEGER, itemtype_id INTEGER, trade_id INTEGER, action_id INTEGER, floor_id INTEGER, building_id INTEGER, estate_id INTEGER, client_id INTEGER, uploaded INTEGER, profile_id INTEGER, inspection_id INTEGER, priority_id INTEGER, fciscore_id INTEGER, podnumber TEXT, guid TEXT, created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
+    private static final String CREATE_TABLE_ITEM = "CREATE TABLE items(id INTEGER PRIMARY KEY,name TEXT, description TEXT, notes TEXT, lastaction TEXT, location TEXT, user_id INTEGER, status_id INTEGER, defect_id INTEGER, itemtype_id INTEGER, trade_id INTEGER, action_id INTEGER, floor_id INTEGER, building_id INTEGER, estate_id INTEGER, client_id INTEGER, uploaded INTEGER, profile_id INTEGER, inspection_id INTEGER, priority_id INTEGER, fciscore_id INTEGER, podnumber TEXT, guid TEXT, inspection_type TEXT, job_number TEXT, created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
     private static final String CREATE_TABLE_ITEMTYPE = "CREATE TABLE itemtypes(id INTEGER PRIMARY KEY,name TEXT,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
     private static final String CREATE_TABLE_LOCALITEM = "CREATE TABLE localitems(id INTEGER PRIMARY KEY,name TEXT,description TEXT,notes TEXT,lastaction TEXT,location TEXT,user_id INTEGER,status_id INTEGER,defect_id INTEGER,itemtype_id INTEGER,trade_id INTEGER,action_id INTEGER,floor_id INTEGER,uploaded INTEGER,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
     private static final String CREATE_TABLE_PROFILE = "CREATE TABLE profiles(id INTEGER PRIMARY KEY,user_id INTEGER,client_id INTEGER,estate_id INTEGER,name TEXT,itemtypes TEXT,defects TEXT,actions TEXT,trades TEXT,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
@@ -46,8 +48,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_TRADE = "CREATE TABLE trades(id INTEGER PRIMARY KEY,name TEXT,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
     private static final String CREATE_TABLE_USER = "CREATE TABLE users(id INTEGER PRIMARY KEY,name TEXT,email TEXT,password TEXT,app TEXT,is_admin INTEGER,client_id INTEGER,estate_id INTEGER,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
     private static final String CREATE_TABLE_INSPECTION = "CREATE TABLE inspections(id INTEGER PRIMARY KEY, user_id INTEGER, client_id INTEGER, estate_id INTEGER, building_id INTEGER, profile_id INTEGER, name TEXT, notes TEXT, intensity_id INTEGER, completed INTEGER, frequency_id INTEGER, alertaddresses TEXT, priority_id INTEGER, uploaded INTEGER, start_at DATETIME, end_at DATETIME, completed_at DATETIME, created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
+    private static final String CREATE_TABLE_LOCATION = "CREATE TABLE locations(id INTEGER PRIMARY KEY,name TEXT,building_id INTEGER,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
+    private static final String CREATE_TABLE_JOB = "CREATE TABLE jobs(id INTEGER PRIMARY KEY,name TEXT,building_id INTEGER,created_at DATETIME, updated_at DATETIME, deleted_at DATETIME)";
     private static final String DATABASE_NAME = "ppmpro";
-    private static final int DATABASE_VERSION = 45;
+    private static final int DATABASE_VERSION = 47;
     private static final String KEY_ACTIONS = "actions";
     private static final String KEY_ACTION_ID = "action_id";
     private static final String KEY_APP = "app";
@@ -99,6 +103,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_START_AT = "start_at";
     private static final String KEY_END_AT = "end_at";
     private static final String KEY_COMPLETED_AT = "completed_at";
+    private static final String KEY_INSPECTION_TYPE = "inspection_type";
+    private static final String KEY_JOB_NUMBER = "job_number";
     private static final String LOG;
     private static final String TABLE_ACTION = "actions";
     private static final String TABLE_BUILDING = "buildings";
@@ -107,6 +113,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_PRIORITY = "prioritys";
     private static final String TABLE_ESTATE = "estates";
     private static final String TABLE_FLOOR = "floors";
+    private static final String TABLE_LOCATION = "locations";
+    private static final String TABLE_JOB = "jobs";
     private static final String TABLE_IMAGE = "images";
     private static final String TABLE_ITEM = "items";
     private static final String TABLE_ITEMTYPE = "itemtypes";
@@ -151,6 +159,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_PROFILE);
         db.execSQL(CREATE_TABLE_INSPECTION);
+        db.execSQL(CREATE_TABLE_LOCATION);
+        db.execSQL(CREATE_TABLE_JOB);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -170,6 +180,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS users");
         db.execSQL("DROP TABLE IF EXISTS profiles");
         db.execSQL("DROP TABLE IF EXISTS inspections");
+        db.execSQL("DROP TABLE IF EXISTS locations");
+        db.execSQL("DROP TABLE IF EXISTS jobs");
         onCreate(db);
     }
 
@@ -1291,6 +1303,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_NOTES, item.getNotes());
         values.put(KEY_LASTACTION, item.getLastaction());
         values.put(KEY_LOCATION, item.getLocation());
+        values.put(KEY_INSPECTION_TYPE, item.getInspection_type());
+        values.put(KEY_JOB_NUMBER, item.getJob_number());
         values.put(KEY_USER_ID, Integer.valueOf(item.getUser_id()));
         values.put(KEY_STATUS_ID, Integer.valueOf(item.getStatus_id()));
         values.put(KEY_DEFECT_ID, Integer.valueOf(item.getDefect_id()));
@@ -1322,6 +1336,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_NOTES, item.getNotes());
         values.put(KEY_LASTACTION, item.getLastaction());
         values.put(KEY_LOCATION, item.getLocation());
+        values.put(KEY_INSPECTION_TYPE, item.getInspection_type());
+        values.put(KEY_JOB_NUMBER, item.getJob_number());
         values.put(KEY_USER_ID, Integer.valueOf(item.getUser_id()));
         values.put(KEY_STATUS_ID, Integer.valueOf(item.getStatus_id()));
         values.put(KEY_DEFECT_ID, Integer.valueOf(item.getDefect_id()));
@@ -1421,6 +1437,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_NOTES, item.getNotes());
         values.put(KEY_LASTACTION, item.getLastaction());
         values.put(KEY_LOCATION, item.getLocation());
+        values.put(KEY_INSPECTION_TYPE, item.getInspection_type());
+        values.put(KEY_JOB_NUMBER, item.getJob_number());
         values.put(KEY_USER_ID, Integer.valueOf(item.getUser_id()));
         values.put(KEY_STATUS_ID, Integer.valueOf(item.getStatus_id()));
         values.put(KEY_DEFECT_ID, Integer.valueOf(item.getDefect_id()));
@@ -1454,6 +1472,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             object.setNotes(c.getString(c.getColumnIndex(KEY_NOTES)));
             object.setLastaction(c.getString(c.getColumnIndex(KEY_LASTACTION)));
             object.setLocation(c.getString(c.getColumnIndex(KEY_LOCATION)));
+            object.setInspection_type(c.getString(c.getColumnIndex(KEY_INSPECTION_TYPE)));
+            object.setJob_number(c.getString(c.getColumnIndex(KEY_JOB_NUMBER)));
             object.setUser_id(c.getInt(c.getColumnIndex(KEY_USER_ID)));
             object.setStatus_id(c.getInt(c.getColumnIndex(KEY_STATUS_ID)));
             object.setDefect_id(c.getInt(c.getColumnIndex(KEY_DEFECT_ID)));
@@ -1558,6 +1578,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 object.setNotes(c.getString(c.getColumnIndex(KEY_NOTES)));
                 object.setLastaction(c.getString(c.getColumnIndex(KEY_LASTACTION)));
                 object.setLocation(c.getString(c.getColumnIndex(KEY_LOCATION)));
+                object.setInspection_type(c.getString(c.getColumnIndex(KEY_INSPECTION_TYPE)));
+                object.setJob_number(c.getString(c.getColumnIndex(KEY_JOB_NUMBER)));
                 object.setUser_id(c.getInt(c.getColumnIndex(KEY_USER_ID)));
                 object.setStatus_id(c.getInt(c.getColumnIndex(KEY_STATUS_ID)));
                 object.setDefect_id(c.getInt(c.getColumnIndex(KEY_DEFECT_ID)));
@@ -1631,6 +1653,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 object.setNotes(c.getString(c.getColumnIndex(KEY_NOTES)));
                 object.setLastaction(c.getString(c.getColumnIndex(KEY_LASTACTION)));
                 object.setLocation(c.getString(c.getColumnIndex(KEY_LOCATION)));
+                object.setInspection_type(c.getString(c.getColumnIndex(KEY_INSPECTION_TYPE)));
+                object.setJob_number(c.getString(c.getColumnIndex(KEY_JOB_NUMBER)));
                 object.setUser_id(c.getInt(c.getColumnIndex(KEY_USER_ID)));
                 object.setStatus_id(c.getInt(c.getColumnIndex(KEY_STATUS_ID)));
                 object.setDefect_id(c.getInt(c.getColumnIndex(KEY_DEFECT_ID)));
@@ -1704,6 +1728,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 object.setNotes(c.getString(c.getColumnIndex(KEY_NOTES)));
                 object.setLastaction(c.getString(c.getColumnIndex(KEY_LASTACTION)));
                 object.setLocation(c.getString(c.getColumnIndex(KEY_LOCATION)));
+                object.setInspection_type(c.getString(c.getColumnIndex(KEY_INSPECTION_TYPE)));
+                object.setJob_number(c.getString(c.getColumnIndex(KEY_JOB_NUMBER)));
                 object.setUser_id(c.getInt(c.getColumnIndex(KEY_USER_ID)));
                 object.setStatus_id(c.getInt(c.getColumnIndex(KEY_STATUS_ID)));
                 object.setPriority_id(c.getInt(c.getColumnIndex(KEY_PRIORITY_ID)));
@@ -1778,6 +1804,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 object.setNotes(c.getString(c.getColumnIndex(KEY_NOTES)));
                 object.setLastaction(c.getString(c.getColumnIndex(KEY_LASTACTION)));
                 object.setLocation(c.getString(c.getColumnIndex(KEY_LOCATION)));
+                object.setInspection_type(c.getString(c.getColumnIndex(KEY_INSPECTION_TYPE)));
+                object.setJob_number(c.getString(c.getColumnIndex(KEY_JOB_NUMBER)));
                 object.setUser_id(c.getInt(c.getColumnIndex(KEY_USER_ID)));
                 object.setStatus_id(c.getInt(c.getColumnIndex(KEY_STATUS_ID)));
                 object.setPriority_id(c.getInt(c.getColumnIndex(KEY_PRIORITY_ID)));
@@ -1851,6 +1879,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 object.setNotes(c.getString(c.getColumnIndex(KEY_NOTES)));
                 object.setLastaction(c.getString(c.getColumnIndex(KEY_LASTACTION)));
                 object.setLocation(c.getString(c.getColumnIndex(KEY_LOCATION)));
+                object.setInspection_type(c.getString(c.getColumnIndex(KEY_INSPECTION_TYPE)));
+                object.setJob_number(c.getString(c.getColumnIndex(KEY_JOB_NUMBER)));
                 object.setUser_id(c.getInt(c.getColumnIndex(KEY_USER_ID)));
                 object.setStatus_id(c.getInt(c.getColumnIndex(KEY_STATUS_ID)));
                 object.setPriority_id(c.getInt(c.getColumnIndex(KEY_PRIORITY_ID)));
@@ -1889,6 +1919,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 object.setNotes(c.getString(c.getColumnIndex(KEY_NOTES)));
                 object.setLastaction(c.getString(c.getColumnIndex(KEY_LASTACTION)));
                 object.setLocation(c.getString(c.getColumnIndex(KEY_LOCATION)));
+                object.setInspection_type(c.getString(c.getColumnIndex(KEY_INSPECTION_TYPE)));
+                object.setJob_number(c.getString(c.getColumnIndex(KEY_JOB_NUMBER)));
                 object.setUser_id(c.getInt(c.getColumnIndex(KEY_USER_ID)));
                 object.setStatus_id(c.getInt(c.getColumnIndex(KEY_STATUS_ID)));
                 object.setPriority_id(c.getInt(c.getColumnIndex(KEY_PRIORITY_ID)));
@@ -1927,6 +1959,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 object.setNotes(c.getString(c.getColumnIndex(KEY_NOTES)));
                 object.setLastaction(c.getString(c.getColumnIndex(KEY_LASTACTION)));
                 object.setLocation(c.getString(c.getColumnIndex(KEY_LOCATION)));
+                object.setInspection_type(c.getString(c.getColumnIndex(KEY_INSPECTION_TYPE)));
+                object.setJob_number(c.getString(c.getColumnIndex(KEY_JOB_NUMBER)));
                 object.setUser_id(c.getInt(c.getColumnIndex(KEY_USER_ID)));
                 object.setStatus_id(c.getInt(c.getColumnIndex(KEY_STATUS_ID)));
                 object.setPriority_id(c.getInt(c.getColumnIndex(KEY_PRIORITY_ID)));
@@ -2225,5 +2259,149 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         c.close();
         return objects;
+    }
+
+    public long createLocation(Location location) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, Integer.valueOf(location.getId()));
+        values.put(KEY_NAME, location.getName());
+        values.put(KEY_BUILDING_ID, Integer.valueOf(location.getBuilding_id()));
+        values.put(KEY_CREATED_AT, location.getCreated_at());
+        values.put(KEY_UPDATED_AT, location.getUpdated_at());
+        values.put(KEY_DELETED_AT, location.getDeleted_at());
+        return db.replace(TABLE_LOCATION, null, values);
+    }
+
+    public Location getLocation(long id) {
+        Cursor c = getReadableDatabase().rawQuery("SELECT  * FROM locations WHERE id = " + id, null);
+        Location object = new Location();
+        if (c != null) {
+            c.moveToFirst();
+            object.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+            object.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+            object.setBuilding_id(c.getInt(c.getColumnIndex(KEY_BUILDING_ID)));
+            object.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+            object.setUpdated_at(c.getString(c.getColumnIndex(KEY_UPDATED_AT)));
+            object.setDeleted_at(c.getString(c.getColumnIndex(KEY_DELETED_AT)));
+            c.close();
+        }
+        return object;
+    }
+
+    public boolean getLocation(long building_id, String location) {
+        Cursor c = getReadableDatabase().rawQuery("SELECT  * FROM locations WHERE building_id = " + building_id + " AND name = '" + location + "'", null);
+        boolean retVal = false;
+        if (c != null) {
+            c.moveToFirst();
+            retVal = true;
+            c.close();
+        }
+        return retVal;
+    }
+
+    public String[] getAllLocations() {
+        List<Location> objects = new ArrayList();
+
+        Cursor c = getReadableDatabase().rawQuery("SELECT  * FROM locations ORDER BY name ASC", null);
+        String[] loc_array = new String[c.getCount()];
+        int i = 0;
+        if (c.moveToFirst()) {
+            do {
+                loc_array[i] = c.getString(c.getColumnIndex(KEY_NAME));
+                Log.d(LOG, loc_array[i]);
+                i++;
+            } while (c.moveToNext());
+        }
+        c.close();
+        return loc_array;
+    }
+
+    public String[] getAllLocations(int building_id) {
+        List<Location> objects = new ArrayList();
+
+        Cursor c = getReadableDatabase().rawQuery("SELECT  * FROM locations WHERE building_id = " + building_id + " ORDER BY name ASC", null);
+        String[] loc_array = new String[c.getCount()];
+        int i = 0;
+        if (c.moveToFirst()) {
+            do {
+                loc_array[i] = c.getString(c.getColumnIndex(KEY_NAME));
+                i++;
+            } while (c.moveToNext());
+        }
+        c.close();
+        return loc_array;
+    }
+
+    public long createJob(Job job) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, Integer.valueOf(job.getId()));
+        values.put(KEY_NAME, job.getName());
+        values.put(KEY_BUILDING_ID, Integer.valueOf(job.getBuilding_id()));
+        values.put(KEY_CREATED_AT, job.getCreated_at());
+        values.put(KEY_UPDATED_AT, job.getUpdated_at());
+        values.put(KEY_DELETED_AT, job.getDeleted_at());
+        return db.replace(TABLE_JOB, null, values);
+    }
+
+    public Job getJob(long id) {
+        Cursor c = getReadableDatabase().rawQuery("SELECT  * FROM jobs WHERE id = " + id, null);
+        Job object = new Job();
+        if (c != null) {
+            c.moveToFirst();
+            object.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+            object.setName(c.getString(c.getColumnIndex(KEY_NAME)));
+            object.setBuilding_id(c.getInt(c.getColumnIndex(KEY_BUILDING_ID)));
+            object.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+            object.setUpdated_at(c.getString(c.getColumnIndex(KEY_UPDATED_AT)));
+            object.setDeleted_at(c.getString(c.getColumnIndex(KEY_DELETED_AT)));
+            c.close();
+        }
+        return object;
+    }
+
+    public boolean getJob(long building_id, String job) {
+        Cursor c = getReadableDatabase().rawQuery("SELECT  * FROM jobs WHERE building_id = " + building_id + " AND name = '" + job + "'", null);
+        boolean retVal = false;
+        if (c != null) {
+            c.moveToFirst();
+            retVal = true;
+            c.close();
+        }
+        return retVal;
+    }
+
+    public String[] getAllJobs() {
+        List<Job> objects = new ArrayList();
+
+        Cursor c = getReadableDatabase().rawQuery("SELECT  * FROM jobs ORDER BY name ASC", null);
+        String[] loc_array = new String[c.getCount()];
+        int i = 0;
+        if (c.moveToFirst()) {
+            do {
+                loc_array[i] = c.getString(c.getColumnIndex(KEY_NAME));
+                Log.d(LOG, loc_array[i]);
+                i++;
+            } while (c.moveToNext());
+        }
+        c.close();
+        return loc_array;
+    }
+
+    public String[] getAllJobs(int building_id) {
+        List<Job> objects = new ArrayList();
+
+        Cursor c = getReadableDatabase().rawQuery("SELECT  * FROM jobs WHERE building_id = " + building_id + " ORDER BY name ASC", null);
+        String[] loc_array = new String[c.getCount()];
+        int i = 0;
+        if (c.moveToFirst()) {
+            do {
+                loc_array[i] = c.getString(c.getColumnIndex(KEY_NAME));
+                i++;
+            } while (c.moveToNext());
+        }
+        c.close();
+        return loc_array;
     }
 }

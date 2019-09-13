@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int TABLE_PROFILE = 13;
     private static final int TABLE_PRIORITY = 14;
     private static final int TABLE_INSPECTION = 15;
+    private static final int TABLE_LOCATION = 16;
+    private static final int TABLE_JOB = 17;
 
     private static final int MENU_SYNC = 0;
     private static final int MENU_FILTER = 1;
@@ -339,6 +341,8 @@ public class MainActivity extends AppCompatActivity {
                         syncItems(TABLE_PROFILE, "https://ppm-pro.com/api/v1/profile");
                         syncItems(TABLE_INSPECTION, "https://ppm-pro.com/api/v1/inspection");
                         syncItems(TABLE_PRIORITY, "https://ppm-pro.com/api/v1/priority");
+                        syncItems(TABLE_LOCATION, "https://ppm-pro.com/api/v1/location");
+                        syncItems(TABLE_JOB, "https://ppm-pro.com/api/v1/job");
 
                     }
                 }
@@ -918,6 +922,8 @@ public class MainActivity extends AppCompatActivity {
         params.put("notes", item.getNotes());
         params.put("lastaction", item.getLastaction());
         params.put("location", item.getLocation());
+        params.put("inspection_type", item.getInspection_type());
+        params.put("job_number", item.getJob_number());
         PPMProApp app = (PPMProApp)getApplication();
         params.put("user_id", app.getUserId());
         params.put("status_id", Integer.toString(item.getStatus_id()));
@@ -1027,6 +1033,8 @@ public class MainActivity extends AppCompatActivity {
         params.put("notes", item.getNotes());
         params.put("lastaction", item.getLastaction());
         params.put("location", item.getLocation());
+        params.put("inspection_type", item.getInspection_type());
+        params.put("job_number", item.getJob_number());
         PPMProApp app = (PPMProApp)getApplication();
         params.put("user_id", app.getUserId());
         params.put("status_id", Integer.toString(item.getStatus_id()));
@@ -1173,6 +1181,12 @@ public class MainActivity extends AppCompatActivity {
                         case TABLE_PRIORITY:
                             updatePriority(responseString);
                             break;
+                        case TABLE_LOCATION:
+                            updateLocation(responseString);
+                            break;
+                        case TABLE_JOB:
+                            updateJob(responseString);
+                            break;
                     }
 
                 } catch (Exception e) {}
@@ -1184,6 +1198,8 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                 }
+
+                error.printStackTrace();
 
                 prgDialog.hide();
                 if (statusCode == 404) {
@@ -1221,6 +1237,8 @@ public class MainActivity extends AppCompatActivity {
                     Item item = new Item();
                     item.setNotes(jsonas.getString("notes"));
                     item.setLocation(jsonas.getString("location"));
+                    item.setInspection_type(jsonas.getString("inspection_type"));
+                    item.setJob_number(jsonas.getString("job_number"));
                     item.setStatus_id(Integer.parseInt(jsonas.getString("status_id")));
                     item.setDefect_id(Integer.parseInt(jsonas.getString("defect_id")));
                     item.setItemtype_id(Integer.parseInt(jsonas.getString("itemtype_id")));
@@ -1569,6 +1587,70 @@ public class MainActivity extends AppCompatActivity {
                     item.setDeleted_at(jsonas.getString("deleted_at"));
 
                     controller.createFloor(item);
+
+                }
+                reloadActivity();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateLocation(String response){
+
+        Gson gson = new GsonBuilder().create();
+        try {
+
+            JSONObject json = new JSONObject(response);
+            JSONArray jitems = json.getJSONArray("locations");
+
+            if(jitems.length() != 0){
+
+                for(int i=0;i<jitems.length(); i++){
+
+                    JSONObject jsonas = jitems.getJSONObject(i);
+
+                    Location item = new Location();
+                    item.setId(Integer.parseInt(jsonas.getString("id")));
+                    item.setName(jsonas.getString("name"));
+                    item.setBuilding_id(Integer.parseInt(jsonas.getString("building_id")));
+                    item.setCreated_at(jsonas.getString("created_at"));
+                    item.setUpdated_at(jsonas.getString("updated_at"));
+                    item.setDeleted_at(jsonas.getString("deleted_at"));
+
+                    controller.createLocation(item);
+
+                }
+                reloadActivity();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateJob(String response){
+
+        Gson gson = new GsonBuilder().create();
+        try {
+
+            JSONObject json = new JSONObject(response);
+            JSONArray jitems = json.getJSONArray("jobs");
+
+            if(jitems.length() != 0){
+
+                for(int i=0;i<jitems.length(); i++){
+
+                    JSONObject jsonas = jitems.getJSONObject(i);
+
+                    Job item = new Job();
+                    item.setId(Integer.parseInt(jsonas.getString("id")));
+                    item.setName(jsonas.getString("name"));
+                    item.setBuilding_id(Integer.parseInt(jsonas.getString("building_id")));
+                    item.setCreated_at(jsonas.getString("created_at"));
+                    item.setUpdated_at(jsonas.getString("updated_at"));
+                    item.setDeleted_at(jsonas.getString("deleted_at"));
+
+                    controller.createJob(item);
 
                 }
                 reloadActivity();

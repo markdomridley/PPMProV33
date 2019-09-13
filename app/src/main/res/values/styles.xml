@@ -7,6 +7,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="colorControlActivated">@color/colorPrimary</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#B51E2A</item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#999999</item>
+
     </style>
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">

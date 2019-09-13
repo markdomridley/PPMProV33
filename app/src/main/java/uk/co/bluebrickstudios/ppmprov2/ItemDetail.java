@@ -36,6 +36,7 @@ public class ItemDetail extends AppCompatActivity implements OnClickListener {
     private GridViewAdapter gridAdapter;
     private GridView gridView;
     TextView location;
+    TextView job_number;
 
     /* renamed from: uk.co.bluebrickstudios.ppmprov2.ItemDetail.1 */
     class C01991 implements OnItemClickListener {
@@ -107,6 +108,7 @@ public class ItemDetail extends AppCompatActivity implements OnClickListener {
         TextView inspection = (TextView) findViewById(R.id.inspection);
         TextView podnumber = (TextView) findViewById(R.id.podnumber);
         this.location = (TextView) findViewById(R.id.location);
+        this.job_number = (TextView) findViewById(R.id.job_number);
         TextView added = (TextView) findViewById(R.id.itemAdded);
         TextView edited = (TextView) findViewById(R.id.itemEdited);
         this._Item_Id = 0;
@@ -136,7 +138,7 @@ public class ItemDetail extends AppCompatActivity implements OnClickListener {
             inspection.setText(BuildConfig.FLAVOR);
         }
         this.location.setText(item.getLocation());
-
+        this.job_number.setText(item.getJob_number());
 
         try{
             switch(item.getPriority_id()) {

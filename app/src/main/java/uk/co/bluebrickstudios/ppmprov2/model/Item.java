@@ -26,6 +26,8 @@ public class Item {
     String podnumber;
     Profile profile;
     Inspection inspection;
+    String inspection_type;
+    String job_number;
     int profile_id;
     int inspection_id;
     Priority priority;
@@ -38,6 +40,22 @@ public class Item {
     int uploaded;
     int user_id;
     int fciscore_id = 0;
+
+    public String getInspection_type() {
+        return inspection_type;
+    }
+
+    public void setInspection_type(String inspection_type) {
+        this.inspection_type = inspection_type;
+    }
+
+    public String getJob_number() {
+        return job_number;
+    }
+
+    public void setJob_number(String job_number) {
+        this.job_number = job_number;
+    }
 
     public int getFciscore_id() {
         return fciscore_id;

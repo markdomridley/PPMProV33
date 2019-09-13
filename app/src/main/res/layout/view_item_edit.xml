@@ -510,6 +510,38 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout15b"
+                    android:layout_below="@id/layout15"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/labelJob"
+                        android:text="Job No.:"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"/>
+                    <EditText
+                        android:id="@+id/job_number"
+                        android:text=""
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.2"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -519,7 +551,7 @@
                     android:layout_weight="1"
                     android:orientation="horizontal"
                     android:id="@+id/layout16"
-                    android:layout_below="@id/layout15"
+                    android:layout_below="@id/layout15b"
                     android:layout_marginBottom="10dp" >
 
                     <Button android:id="@+id/button_filter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="View Floor plan" android:drawableLeft="@mipmap/ic_action_tiles_large" android:onClick="viewMap" />
